@@ -1,11 +1,10 @@
 package graph;
 
-import org.junit.jupiter.api.Test;
-
-import java.util.HashSet;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+
+import java.util.HashSet;
+import org.junit.jupiter.api.Test;
 
 class BreadthFirstSearchTest {
 
