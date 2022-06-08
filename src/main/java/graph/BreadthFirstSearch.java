@@ -8,9 +8,6 @@ import java.util.stream.Collectors;
 
 class BreadthFirstSearch<T> {
 
-  private final Queue<Node<T>> nextNodesToVisit = new ArrayDeque<>();
-  private final Set<Node<T>> visitedNodes = new HashSet<>();
-
   @SafeVarargs
   final Node<T> find(T searchValue, Node<T>... rootNodes) {
     if (rootNodes == null || rootNodes.length == 0) {
@@ -34,21 +31,24 @@ class BreadthFirstSearch<T> {
       return null;
     }
 
-    Node<T> found = null;
-    this.nextNodesToVisit.add(rootNode);
+    Queue<Node<T>> nextNodesToVisit = new ArrayDeque<>();
+    Set<Node<T>> visitedNodes = new HashSet<>();
 
-    while (!this.nextNodesToVisit.isEmpty()) {
-      Node<T> node = this.nextNodesToVisit.poll();
-      this.visitedNodes.add(node);
+    Node<T> found = null;
+    nextNodesToVisit.add(rootNode);
+
+    while (!nextNodesToVisit.isEmpty()) {
+      Node<T> node = nextNodesToVisit.poll();
+      visitedNodes.add(node);
 
       if ((searchValue == null && node.value == null)
           || (searchValue != null && searchValue.equals(node.value))) {
         found = node;
         break;
       } else {
-        this.nextNodesToVisit.addAll(
+        nextNodesToVisit.addAll(
             node.adjacentNodes.stream()
-                .filter((tempNode) -> !this.visitedNodes.contains(tempNode))
+                .filter((tempNode) -> !visitedNodes.contains(tempNode))
                 .collect(Collectors.toList()));
       }
     }
